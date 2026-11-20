@@ -1,0 +1,34 @@
+{
+    "name": "LastLantern",
+    "rootNamespace": "LastLantern",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Cinemachine",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "LL_URP",
+        "LL_INPUT",
+        "LL_CINEMACHINE",
+        "LL_UGUI",
+        "LL_TMP"
+    ],
+    "versionDefines": [
+        { "name": "com.unity.render-pipelines.universal", "expression": "12.0.0", "define": "LL_URP" },
+        { "name": "com.unity.inputsystem", "expression": "1.4.0", "define": "LL_INPUT" },
+        { "name": "com.unity.cinemachine", "expression": "[2.8.0,3.0.0)", "define": "LL_CINEMACHINE" },
+        { "name": "com.unity.ugui", "expression": "1.0.0", "define": "LL_UGUI" },
+        { "name": "com.unity.textmeshpro", "expression": "3.0.0", "define": "LL_TMP" },
+        { "name": "com.unity.ugui", "expression": "2.0.0", "define": "LL_TMP" }
+    ],
+    "noEngineReferences": false
+}
