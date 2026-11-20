@@ -51,11 +51,12 @@ namespace LastLantern.Installer
             if (!IsInstalled(CinemachinePackage))
                 missing.Add(CinemachinePackage + "@" + CinemachineVersion);
 
-            // В Unity 2022 TextMeshPro — отдельный пакет, в Unity 6 он уже внутри ugui 2.x
-            bool uguiInstalled = IsInstalled("com.unity.ugui");
+#if !UNITY_6000_0_OR_NEWER
+            // В Unity 2022 TextMeshPro — отдельный пакет (в Unity 6 он уже внутри ugui 2.x)
             bool tmpAvailable = Type.GetType("TMPro.TMP_Text, Unity.TextMeshPro") != null;
-            if (uguiInstalled && !tmpAvailable && !IsInstalled("com.unity.textmeshpro"))
+            if (!tmpAvailable && !IsInstalled("com.unity.textmeshpro"))
                 missing.Add("com.unity.textmeshpro");
+#endif
 
             if (missing.Count == 0) return;
 
@@ -66,7 +67,17 @@ namespace LastLantern.Installer
 
         static bool IsInstalled(string packageName)
         {
-            return UnityEditor.PackageManager.PackageInfo.FindForAssetPath("Packages/" + packageName) != null;
+            if (UnityEditor.PackageManager.PackageInfo.FindForAssetPath("Packages/" + packageName) != null) return true;
+            // Встроенные пакеты (например, ugui) не всегда находятся по пути — проверяем ещё manifest.json
+            try
+            {
+                string manifest = System.IO.File.ReadAllText("Packages/manifest.json");
+                return manifest.Contains("\"" + packageName + "\"");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         static void WaitForRequest()
